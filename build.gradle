@@ -14,16 +14,16 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation ('org.springframework.boot:spring-boot-starter-test'){
-		exclude group:'org.junit.vintage', module:'junit-vintage-engine'
+	implementation 'org.springfreamwork.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springfreamwork.boot:spring-boot-starter-validation'
+	runtimeOnly 'mysql:mysql-connector-java'
+	compileOnly 'org.projectlombok:lombok:1.18.12'
+	annotationProcessor 'org.projectlombok:lombok:lombok 1.18.12'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	compileOnly 'org.projectlombok:lombok:1.18.16'
-	annotationProcessor 'org.projectlombok:lombok:1.18.16'
 
-	testCompileOnly 'org.projectlombok:lombok:1.18.16'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
-}
-
-test {
-	useJUnitPlatform()
+	test {
+		useJUnitPlatform()
+	}
 }
