@@ -13,9 +13,5 @@ public class TasksApplication{
 
 		SpringApplication.run(TasksApplication.class, args);
 	}
-	//@Override
-	//protected SpringApplicationBuilder configure (SpringApplicationBuilder application){
-		//return application.sources(TasksApplication.class);
-//	}
 
 }
