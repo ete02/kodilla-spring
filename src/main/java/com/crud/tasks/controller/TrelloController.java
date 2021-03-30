@@ -15,11 +15,12 @@ import java.util.List;
 public class TrelloController {
     private final TrelloClient trelloClient;
 
-   /* @GetMapping("getTrelloBoards")
-    public void getTrelloBoards() {
-        List<TrelloBoardDto> trelloBoards = trelloClient.getTrelloBoards();
+    @GetMapping("getTrelloBoards")
+    public List<TrelloBoardDto> getTrelloBoards(){
+        return trelloClient.getTrelloBoards();
+    }
 
-        trelloBoards.forEach(trelloBoardDto -> {
+   /*   trelloBoards.forEach(trelloBoardDto -> {
             System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName());
             System.out.println("This board cantains lists: ");
             trelloBoardDto.getLists().forEach(trelloList -> {
