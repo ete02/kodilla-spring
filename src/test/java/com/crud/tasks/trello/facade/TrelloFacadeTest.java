@@ -1,9 +1,6 @@
 package com.crud.tasks.trello.facade;
 
-import com.crud.tasks.domain.TrelloBoard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloList;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.mapper.TrelloMapper;
 import com.crud.tasks.service.TrelloService;
 import com.crud.tasks.trello.validator.TrelloValidator;
@@ -17,7 +14,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -65,5 +64,22 @@ public class TrelloFacadeTest {
             );
         });
 
+    }
+    @Test
+    public void shouldCreateCard() {
+        //GIVEN
+        TrelloCard trelloCard = new TrelloCard("Name", "Description", "Pos", "ListId");
+        TrelloCardDto trelloCardDto = new TrelloCardDto("Name", "Description", "Pos", "ListId");
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("1", "Name", "http://test.com/cards/");
+
+        given(trelloService.createTrelloCard(trelloCardDto)).willReturn(createdTrelloCardDto);
+        given(trelloMapper.mapToCard(trelloCardDto)).willReturn(trelloCard);
+        given(trelloMapper.mapToCardDto(trelloCard)).willReturn(trelloCardDto);
+        //WHEN
+        CreatedTrelloCardDto card = trelloFacade.createCard(trelloCardDto);
+        //THEN
+        assertEquals("1", card.getId());
+        assertEquals("Name", card.getName());
+        assertEquals("http://test.com/cards/", card.getShortUrl());
     }
 }
