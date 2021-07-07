@@ -13,20 +13,44 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("v1/trello")
-@RequiredArgsConstructor
 @CrossOrigin("*")
+@RequiredArgsConstructor
+@RequestMapping("/v1/trello")
 public class TrelloController {
-    @Autowired
     private final TrelloFacade trelloFacade;
 
-    @GetMapping("getTrelloBoards")
+    @RequestMapping(method = RequestMethod.GET, value = "/boards")
     public List<TrelloBoardDto> getTrelloBoards() {
         return trelloFacade.fetchTrelloBoards();
     }
 
-    @PostMapping("createTrelloCard")
+    @RequestMapping(method = RequestMethod.POST, value = "/cards")
     public CreatedTrelloCardDto createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
         return trelloFacade.createCard(trelloCardDto);
     }
+
+//    @RequestMapping(method = RequestMethod.GET, value = "getTrelloBoards")
+//    public List<TrelloBoardDto> getTrelloBoards() {
+//        return trelloService.fetchTrelloBoards();
+//        trelloClient.getTrelloBoards().ifPresent(trelloBoard -> trelloBoard.stream()
+//                .filter(trelloBoardDto -> countTrelloBoardRequiredFields(trelloBoardDto) == 2)
+//                .filter(trelloBoardDto -> trelloBoardDto.getName().contains("Kodilla"))
+//                .forEach(trelloBoardDto -> {
+//                    System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName());
+//                    System.out.println("This board contains lists: ");
+//                    trelloBoardDto.getLists().forEach(trelloList ->
+//                            System.out.println(trelloList.getName() + " - " + trelloList.getId() + " - " + trelloList.isClosed()));
+//                }));
+//    }
+
+//    @RequestMapping(method = RequestMethod.POST, value = "createTrelloCard")
+//    public CreatedTrelloCardDto createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
+//        return trelloService.createdTrelloCard(trelloCardDto);
+//    }
+
+//    private Long countTrelloBoardRequiredFields(final TrelloBoardDto trelloBoardDto) {
+//        return Arrays.stream(trelloBoardDto.getClass().getDeclaredFields())
+//                .filter(field -> field.getName().equals("id") ^ field.getName().equals("name"))
+//                .count();
+//    }
 }
