@@ -62,7 +62,7 @@ public class TaskControllerTestSuite {
         given(taskMapper.mapToTaskDtoList(tasks)).willReturn(tasksDto);
         given(dbService.getAllTasks()).willReturn(tasks);
         //When && Then
-        mockMvc.perform(get("/v1/task/getTasks")
+        mockMvc.perform(get("/v1/tasks")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -78,9 +78,9 @@ public class TaskControllerTestSuite {
     public void shouldGetTask() throws Exception {
         //Given
         given(taskMapper.mapToTaskDto(task)).willReturn(taskDto);
-        given(dbService.getTask(1L)).willReturn(Optional.of(task));
+        given(dbService.getTaskById(1L)).willReturn(Optional.of(task));
         //When && Then
-        mockMvc.perform(get("/v1/task/getTask/{taskId}", 1L)
+        mockMvc.perform(get("/v1/tasks/{taskId}", 1L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
@@ -91,9 +91,9 @@ public class TaskControllerTestSuite {
     @Test
     public void shouldDeleteTask() throws Exception {
         //Given
-        doNothing().when(dbService).deleteTask(1L);
+        doNothing().when(dbService).deleteTaskByID(1L);
         //When && Then
-        mockMvc.perform(delete("/v1/task/deleteTask/{taskId}", 1L)
+        mockMvc.perform(delete("/v1/tasks/{taskId}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"))
                 .andExpect(status().isOk());
@@ -107,7 +107,7 @@ public class TaskControllerTestSuite {
         given(taskMapper.mapToTask(ArgumentMatchers.any(TaskDto.class))).willReturn(task);
         given(dbService.saveTask(ArgumentMatchers.any(Task.class))).willReturn(task);
         //When && Then
-        mockMvc.perform(put("/v1/task/updateTask")
+        mockMvc.perform(put("/v1/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -124,7 +124,7 @@ public class TaskControllerTestSuite {
         given(taskMapper.mapToTask(ArgumentMatchers.any(TaskDto.class))).willReturn(task);
         given(dbService.saveTask(ArgumentMatchers.any(Task.class))).willReturn(task);
         //When && Then
-        mockMvc.perform(post("/v1/task/createTask")
+        mockMvc.perform(post("/v1/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
